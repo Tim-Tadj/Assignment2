@@ -1,0 +1,2 @@
+print({'sepal_length': '6.9', 'sepal_width': '3.1', 'petal_length': '5.1', 'petal_width': '2.3', 'species': 'virginica'})
+print({'sepal_length': 6.9, 'sepal_width': 3.1, 'petal_length': 5.1, 'petal_width': 2.3, 'species': 'virginica'})
