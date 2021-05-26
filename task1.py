@@ -36,13 +36,14 @@ class dataset():
         euclideanSum = 0
         for feature, value in flower1.items():
             if not isinstance(value, str):
-                euclideanSum += (value - flower2[feature])**2
+                euclideanSum += math.sqrt((value - flower2[feature])**2)
         return math.sqrt(euclideanSum)
 
     #takes a training set, a single flower and an integer k, 
     #returns the k nearest neighbours of the flower in the training set
     def kNN(self, flower, k):
         distanceToFlower = []
+        # print(len(self.training))
         for trainingFlower in self.training:
             
             distance = self.euclidean_distance(trainingFlower, flower)
@@ -58,21 +59,27 @@ class dataset():
                         distanceToFlower.insert(i, [distance, trainingFlower])
                         distanceToFlower.pop()
                         break
+                        
                     
-            else:
+            elif len(distanceToFlower) < k:
                 for i in range(len(distanceToFlower)):
                     if distance < distanceToFlower[i][0]:
                         distanceToFlower.insert(i, [distance, trainingFlower])
-        
+                        break
+                else:
+                    distanceToFlower.append([distance, trainingFlower])
+                    
+
+        # print(k, len(distanceToFlower))
         return [b[1] for b in distanceToFlower] #return a list of k nearest flowers
 
     def flowerType(self, flower, kNearest, ):
         flowerCount = {}
         for nflower in kNearest:
             if nflower["species"] not in flowerCount:
-                flowerCount[nflower["species"]] = 1/ self.euclidean_distance(flower, nflower)
+                flowerCount[nflower["species"]] = 1 / self.euclidean_distance(flower, nflower)
             else:
-                flowerCount[nflower["species"]] += 1/ self.euclidean_distance(flower, nflower)
+                flowerCount[nflower["species"]] += 1 / self.euclidean_distance(flower, nflower)
 
         result = ""
         prev_count = 0
